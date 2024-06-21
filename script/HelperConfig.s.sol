@@ -29,6 +29,14 @@ contract HelperConfig is Script {
         }
     }
 
+    function getActiveNetworkConfig()
+        public
+        view
+        returns (NetworkConfig memory)
+    {
+        return activeNetworkConfig;
+    }
+
     function getSepoliaEthConfig() public view returns (NetworkConfig memory) {
         return
             NetworkConfig({

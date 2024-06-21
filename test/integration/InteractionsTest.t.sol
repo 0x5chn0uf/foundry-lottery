@@ -7,6 +7,7 @@ import {HelperConfig} from "../../script/HelperConfig.s.sol";
 import {Raffle} from "../../src/Raffle.sol";
 import {Vm} from "forge-std/Vm.sol";
 import {VRFCoordinatorV2Mock} from "@chainlink/contracts/src/v0.8/mocks/VRFCoordinatorV2Mock.sol";
+import {CreateSubscription, FundSubscription, AddConsumer} from "../../script/Interactions.s.sol";
 
 contract InteractionsTest is Test {
     Raffle raffle;
@@ -21,7 +22,13 @@ contract InteractionsTest is Test {
         DeployRaffle deployer = new DeployRaffle();
         (raffle, helperConfig) = deployer.run();
 
-        networkConfig = helperConfig.activeNetworkConfig();
+        networkConfig = helperConfig.getActiveNetworkConfig();
         vm.deal(PLAYER, STARTING_USER_BALANCE);
+    }
+
+    function testCreateSubscriptionUsingConfig() public {
+        uint64 subId = new CreateSubscription().createSubscriptionUsingConfig();
+
+        assert(subId != 0);
     }
 }
